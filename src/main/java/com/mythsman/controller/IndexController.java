@@ -20,28 +20,35 @@ public class IndexController {
     public String explore() {
         return "explore";
     }
+
     @RequestMapping(path = {"/favourite"})
     public String favourite() {
         return "favourite";
     }
+
     @RequestMapping(path = {"/login"})
     public String login() {
         return "login";
     }
+
     @RequestMapping(path = {"/homepage"})
     public String homepage() {
         return "homepage";
     }
+
     @RequestMapping(path = {"/setting"})
     public String setting() {
         return "setting";
     }
+
     @RequestMapping(path = {"/mail"})
     public String mail() {
         return "mail";
     }
+
     @RequestMapping(path = {"/logout"})
     public String logout() {
         return "logout";
     }
+
 }
