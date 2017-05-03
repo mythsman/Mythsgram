@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header th:replace="header"></header>
+    <link href="css/login.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <form  id="form" class="form-signin" method="post" action="signIn.html">
+        <h2 class="form-signin-heading">Mythsgram</h2>
+        <input type="email" name="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus" />
+        <input type="password" name="inputPassword" class="form-control" placeholder="Password" required="required"/>
+        <div class="checkbox">
+            <label><input type="checkbox" name="rememberBox"/> Remember me</label>
+        </div>
+        <button class="col-md-5 col-xs-5 btn btn-lg btn-primary " type="submit" onclick="document.getElementById('form').action='signIn.html'">Sign in</button>
+        <button class="col-md-5 col-md-offset-2 col-xs-5 col-xs-offset-2 btn btn-lg btn-primary " type="submit" onclick="document.getElementById('form').action='signUp.html'">Sign up</button>
+    </form>
+</div>
+</body>
+</html>

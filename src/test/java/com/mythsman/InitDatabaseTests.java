@@ -14,14 +14,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Sql("/init-schema.sql")
 public class InitDatabaseTests {
 
-	@Autowired
-	private UserDao userDAO;
+    @Autowired
+    private UserDao userDAO;
 
-	@Test
-	public void initDatabase() {
-		for(int i=0;i<=10;i++){
-			User user=new User(i,String.format("%d",i));
-			userDAO.addUser(user);
-		}
-	}
+    @Test
+    public void initDatabase() {
+        for (int i = 0; i <= 10; i++) {
+            User user = new User(i, String.format("%d", i));
+            userDAO.addUser(user);
+        }
+    }
 }

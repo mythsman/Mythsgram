@@ -9,26 +9,39 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 public class IndexController {
+
     @RequestMapping(path = {"index", "/"})
-    @ResponseBody
-    public String index() {
-        return "Hello world";
+    public String index(Model model) {
+        model.addAttribute("welcome", "work!");
+        return "index";
     }
 
-    @RequestMapping(path = {"/profile/{groupId}/{userId}"})
-    @ResponseBody
-    public String profile(
-            @PathVariable("groupId") int groupId,
-            @PathVariable("userId") int userId,
-            @RequestParam(value = "type", defaultValue = "1") int type,
-            @RequestParam(value = "key", defaultValue = "1") int key
-    ) {
-        return String.format("groupId :%d userId :%d type :%d key :%d", groupId,userId,type, key);
+    @RequestMapping(path = {"/explore"})
+    public String explore() {
+        return "explore";
     }
-
-    @RequestMapping(path = {"/template"},method={RequestMethod.GET})
-    public String template(Model model) {
-        model.addAttribute("arg1","value1");
-        return "home";
+    @RequestMapping(path = {"/favourite"})
+    public String favourite() {
+        return "favourite";
+    }
+    @RequestMapping(path = {"/login"})
+    public String login() {
+        return "login";
+    }
+    @RequestMapping(path = {"/homepage"})
+    public String homepage() {
+        return "homepage";
+    }
+    @RequestMapping(path = {"/setting"})
+    public String setting() {
+        return "setting";
+    }
+    @RequestMapping(path = {"/mail"})
+    public String mail() {
+        return "mail";
+    }
+    @RequestMapping(path = {"/logout"})
+    public String logout() {
+        return "logout";
     }
 }
