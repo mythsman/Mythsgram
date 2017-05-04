@@ -1,7 +1,6 @@
-
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `uid` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
   `gender` ENUM("male","female","unknown") DEFAULT "unknown",
   `name` varchar(20) DEFAULT NULL,
   `salt` varchar(20) DEFAULT NULL,
@@ -11,8 +10,8 @@ CREATE TABLE `user` (
   `biography` TEXT DEFAULT NULL,
   `email` varchar(20) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
-  `date` DATE DEFAULT NULL,
+  `date` DATETIME DEFAULT current_timestamp,
   `followers` INT DEFAULT 0 ,
   `following` INT DEFAULT 0 ,
   `posts` INT DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

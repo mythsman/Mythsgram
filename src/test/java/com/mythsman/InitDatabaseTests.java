@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Sql("/init-schema.sql")
+@Sql("/initDatabase.sql")
 public class InitDatabaseTests {
 
     @Autowired

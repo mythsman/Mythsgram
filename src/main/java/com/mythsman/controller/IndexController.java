@@ -26,8 +26,9 @@ public class IndexController {
         return "favourite";
     }
 
-    @RequestMapping(path = {"/login"})
-    public String login() {
+    @RequestMapping(path = {"/login","/login/"})
+    public String login(Model model) {
+        model.addAttribute("msg","ok");
         return "login";
     }
 

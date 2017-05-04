@@ -2,10 +2,12 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <header th:replace="header"></header>
-    <link href="css/login.css" rel="stylesheet"/>
+    <link href="/css/login.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
+    <div th:text="${uri}"></div>
+    <div th:text="${msg}"></div>
     <form class="form-login" method="post" action="login.html">
         <h2 class="form-login-heading">Mythsgram</h2>
         <input id="hidden" name="type" type="hidden" value="signIn"/>
