@@ -54,7 +54,7 @@ public class IndexController {
     @RequestMapping(path = {"/logout"})
     public String logout(@CookieValue("ticket")String ticket){
         userService.logout(ticket);
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @RequestMapping(path = {"/search"})

@@ -26,7 +26,7 @@ public class UserService {
     @Autowired
     LoginTicketDao loginTicketDao;
 
-    public Map<String,String> register(String name,String password){
+    public Map<String,String> register(String name,String password,String rememberMe){
         Map<String,String>map=new HashMap<>();
         if(name.length()>=20){
             map.put("msg","Your name is too long");
@@ -46,12 +46,12 @@ public class UserService {
         userDao.addUser(name,salt,password);
 
         map.put("msg","success");
-        String ticket=addLoginTicket(userDao.selectByName(name).getId());
+        String ticket=addLoginTicket(userDao.selectByName(name).getId(),rememberMe);
         map.put("ticket",ticket);
         return map;
     }
 
-    public Map<String,String> login(String name, String password){
+    public Map<String,String> login(String name, String password,String rememberMe){
         Map<String,String>map=new HashMap<>();
         User user=userDao.selectByName(name);
         if(user==null){
@@ -59,7 +59,7 @@ public class UserService {
             return map;
         }else if(Util.MD5(password+user.getSalt()).equals(user.getPassword())){
             map.put("msg","success");
-            String ticket=addLoginTicket(user.getId());
+            String ticket=addLoginTicket(user.getId(),rememberMe);
             map.put("ticket",ticket);
             return map;
         }else{
@@ -72,13 +72,19 @@ public class UserService {
         loginTicketDao.updateValid(ticket,0);
     }
 
-    private String addLoginTicket(int uid){
+    private String addLoginTicket(int uid,String rememberMe){
         LoginTicket loginTicket=new LoginTicket();
         loginTicket.setUid(uid);
         loginTicket.setTicket(UUID.randomUUID().toString().replaceAll("-",""));
 
         Date date=new Date();
-        date.setTime(date.getTime()+3600*24*30);
+
+        if(rememberMe!=null&&rememberMe.equals("on")){
+            date.setTime(date.getTime()+3600*24*30);
+        }else{
+            date.setTime(date.getTime()+3600*24);
+        }
+
         loginTicket.setExpire(date);
         loginTicket.setValid(1);
         loginTicketDao.addTicket(loginTicket);

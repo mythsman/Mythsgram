@@ -30,7 +30,7 @@
                     /explore">Explore</a></li>
                     <li th:class="${favouriteOn}?'active'"><a href="/favourite">Favourite</a></li>
 
-                    <li th:unless="${user}"><a href="/login">Login</a></li>
+                    <li th:unless="${user}" th:class="${loginOn}?'active'" ><a href="/login">Login</a></li>
                     <li th:if="${user}" class="dropdown"
                         th:class="(${homepageOn} or ${settingOn} or ${mailOn})?'active'">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"

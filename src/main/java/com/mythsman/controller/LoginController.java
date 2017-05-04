@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
@@ -30,10 +31,11 @@ public class LoginController {
     }
 
     @RequestMapping(path = {"/login"}, method = {RequestMethod.POST})
-    public String loginPost(Model model, @RequestParam("type") String type, @RequestParam("inputName") String name, @RequestParam("inputPassword") String password, HttpServletResponse httpServletResponse) {
+    public String loginPost(Model model, @RequestParam("type") String type, @RequestParam("inputName") String name, @RequestParam("inputPassword") String password,HttpServletResponse httpServletResponse,HttpServletRequest httpServletRequest) {
+       String rememberMe= httpServletRequest.getParameter("rememberMe");
         Map<String, String> map;
         if (type.equals("signIn")) {
-            map = userService.login(name, password);
+            map = userService.login(name, password,rememberMe);
             model.addAllAttributes(map);
 
             if (map.get("msg").equals("success")) {
@@ -42,7 +44,7 @@ public class LoginController {
                 return "redirect:/";
             }
         } else if (type.equals("signUp")) {
-            map = userService.register(name, password);
+            map = userService.register(name, password,rememberMe);
             model.addAllAttributes(map);
             if (map.get("msg").equals("success")) {
                 Cookie cookie=new Cookie("ticket",map.get("ticket"));

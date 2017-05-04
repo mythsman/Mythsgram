@@ -5,6 +5,7 @@
     <link href="/css/login.css" rel="stylesheet"/>
 </head>
 <body>
+<div th:include="nav :: target" th:with="loginOn=true"></div>
 <div class="container">
     <form class="form-login" method="post" action="/login">
         <h2 class="form-login-heading">Mythsgram</h2>
