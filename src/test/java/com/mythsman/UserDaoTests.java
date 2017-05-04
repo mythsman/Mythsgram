@@ -2,8 +2,8 @@ package com.mythsman;
 
 import com.mythsman.dao.UserDao;
 import com.mythsman.model.User;
+import com.mythsman.service.UserService;
 import org.apache.log4j.Logger;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +22,21 @@ public class UserDaoTests {
 
     @Test
     public void addUserTests() {
-        User user = new User("myths", "eread", "32434324");
-        userDAO.addUser(user);
+        int res=userDAO.addUser("myths", "eread", "32434324");
+        logger.info(res);
     }
 
     @Test
-    public void getUserByIdTests() {
+    public void selectByIdTests() {
         int id = 1;
-        User user = userDAO.getUserById(id);
+        User user = userDAO.selectById(id);
         logger.info(user.getId()+" "+user.getName());
     }
 
     @Test
-    public void getLoginInfoByIdTests() {
-        int id = 1;
-        User user = userDAO.getUserById(id);
-        logger.info(user.getName()+" "+user.getSalt()+" "+user.getPassword());
+    public void selectByNameTests() {
+        String name="myths1";
+        User user = userDAO.selectByName(name);
+        logger.info(user.getId()+" "+user.getName());
     }
-
 }

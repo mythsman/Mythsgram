@@ -38,8 +38,8 @@ public class User {
         return password;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public String getAvatar() {
+        return avatar;
     }
 
     public String getWebsite() {
@@ -54,8 +54,8 @@ public class User {
         return email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
     public Date getDate() {
@@ -74,33 +74,27 @@ public class User {
         return posts;
     }
 
-    String avatarUrl;
+    String avatar;
     String website;
     String biography;
     String email;
-    String phoneNumber;
+    String phone;
     Date date;
     int followers;
     int following;
     int posts;
 
-    public User(String name, String salt, String password) {
-        this.name = name;
-        this.salt = salt;
-        this.password = password;
-    }
-
-    public User(int id, String gender, String name, String salt, String password, String avatarUrl, String website, String biography, String email, String phoneNumber, Timestamp timestamp, int followers, int following, int posts) {
+    public User(int id, String gender, String name, String salt, String password, String avatar, String website, String biography, String email, String phone, Timestamp timestamp, int followers, int following, int posts) {
         this.id = id;
         this.gender = gender;
         this.name = name;
         this.salt = salt;
         this.password = password;
-        this.avatarUrl = avatarUrl;
+        this.avatar = avatar;
         this.website = website;
         this.biography = biography;
         this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
         this.date =new Date(timestamp.getTime());
         this.followers = followers;
         this.following = following;

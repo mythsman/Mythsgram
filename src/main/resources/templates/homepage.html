@@ -1,8 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<header th:replace="header"></header>
+<head>
+    <header th:replace="header"></header>
+</head>
 <body>
-<nav th:replace="nav"></nav>
+<div th:include="nav :: target" th:with="homepageOn=true"></div>
 <div class="container">
 
 </div>

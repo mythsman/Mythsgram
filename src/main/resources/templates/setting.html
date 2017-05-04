@@ -4,7 +4,7 @@
     <header th:replace="header"></header>
 </head>
 <body>
-<nav th:replace="nav"></nav>
+<div th:include="nav :: target" th:with="settingOn=true"></div>
 <div class="container">
 
 </div>
