@@ -32,10 +32,12 @@ public class PassportInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String ticket=null;
-        for(Cookie cookie : httpServletRequest.getCookies()){
-            if(cookie.getName().equals("ticket")){
-                ticket=cookie.getValue();
-                break;
+        if(httpServletRequest.getCookies()!=null) {
+            for (Cookie cookie : httpServletRequest.getCookies()) {
+                if (cookie.getName().equals("ticket")) {
+                    ticket = cookie.getValue();
+                    break;
+                }
             }
         }
         if(ticket!=null){
