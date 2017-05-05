@@ -99,8 +99,8 @@ public class UserService {
 
     public Map<String, String> updatePassword(String oldpasswd, String newpasswd, String reinput) {
         Map<String, String> map = new HashMap<>();
-        User user=userComponent.getUser();
-        if(user==null){
+        User user = userComponent.getUser();
+        if (user == null) {
             map.put("msg", "Not login.");
             return map;
         }
@@ -112,14 +112,14 @@ public class UserService {
             map.put("msg", "Not valid.");
             return map;
         }
-        if( !Util.MD5(oldpasswd+user.getSalt()).equals(user.getPassword())){
-            map.put("msg","Wrong password.");
+        if (!Util.MD5(oldpasswd + user.getSalt()).equals(user.getPassword())) {
+            map.put("msg", "Wrong password.");
             return map;
         }
         String salt = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5);
         newpasswd = Util.MD5(newpasswd + salt);
-        userDao.updatePassword(user.getId(),salt,newpasswd);
-        map.put("msg","success");
+        userDao.updatePassword(user.getId(), salt, newpasswd);
+        map.put("msg", "success");
         return map;
     }
 
@@ -130,9 +130,9 @@ public class UserService {
         loginTicket.setTicket(UUID.randomUUID().toString().replaceAll("-", ""));
         Date date = new Date();
         if (rememberMe != null && rememberMe.equals("on")) {
-            date.setTime(date.getTime() + 1000*3600 * 24 * 30);
+            date.setTime(date.getTime() + 1000L * 3600L * 24L * 30L);
         } else {
-            date.setTime(date.getTime() + 1000*3600 * 24);
+            date.setTime(date.getTime() + 1000L * 3600L * 24L);
         }
         loginTicket.setExpire(date);
         loginTicket.setValid(1);
