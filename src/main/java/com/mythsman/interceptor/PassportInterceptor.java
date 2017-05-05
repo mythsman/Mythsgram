@@ -4,7 +4,7 @@ import com.mythsman.dao.LoginTicketDao;
 import com.mythsman.dao.UserDao;
 import com.mythsman.model.LoginTicket;
 import com.mythsman.model.User;
-import com.mythsman.model.UserComponent;
+import com.mythsman.service.UserComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

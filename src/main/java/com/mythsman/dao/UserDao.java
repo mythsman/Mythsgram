@@ -1,10 +1,7 @@
 package com.mythsman.dao;
 
 import com.mythsman.model.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,5 +19,11 @@ public interface UserDao {
 
     @Select({"select * from `user` where name=#{name}"})
     User selectByName(@Param("name") String name);
+
+    @Update({"update `user` set website=#{website} , email=#{email} ,phone=#{phone} ,gender=#{gender},biography=#{biography} where id=#{id}"})
+    void updateProfile(User user);
+
+    @Insert({"update `user` set salt=#{salt},password=#{password} where id=#{id}"})
+    void updatePassword(@Param("id")int id, @Param("salt") String salt, @Param("password") String password);
 
 }

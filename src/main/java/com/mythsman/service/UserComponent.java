@@ -1,5 +1,6 @@
-package com.mythsman.model;
+package com.mythsman.service;
 
+import com.mythsman.model.User;
 import org.springframework.stereotype.Component;
 
 /**

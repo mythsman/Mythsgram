@@ -41,11 +41,6 @@ public class IndexController {
         return "homepage";
     }
 
-    @RequestMapping(path = {"/setting"})
-    public String setting(Model model) {
-        return "setting";
-    }
-
     @RequestMapping(path = {"/mail"})
     public String mail(Model model) {
         return "mail";
@@ -56,7 +51,6 @@ public class IndexController {
         userService.logout(ticket);
         return "redirect:/login";
     }
-
     @RequestMapping(path = {"/search"})
     public String search(Model model) {
         return "search";

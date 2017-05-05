@@ -9,7 +9,7 @@
 <div class="container">
     <form class="form-login" method="post" action="/login">
         <h2 class="form-login-heading">Mythsgram</h2>
-        <input id="hidden" name="type" type="hidden" value="signIn"/>
+        <input id="hidden" type="checkbox" hidden="hidden" checked="checked"/>
         <input type="text" name="inputName" class="form-control" placeholder="Username" required="required"
                autofocus="autofocus"/>
         <input type="password" name="inputPassword" class="form-control" placeholder="Password" required="required"/>
@@ -20,10 +20,10 @@
         <label th:text="${msg}" class="col-md-12 col-xs-12"></label>
 
         <button class="col-md-5 col-xs-5 btn btn-lg btn-primary " type="submit"
-                onclick="document.getElementById('hidden').value='signIn'">Sign in
+                onclick="document.getElementById('hidden').name='signIn'">Sign in
         </button>
         <button class="col-md-5 col-md-offset-2 col-xs-5 col-xs-offset-2 btn btn-lg btn-primary " type="submit"
-                onclick="document.getElementById('hidden').value='signUp'">Sign up
+                onclick="document.getElementById('hidden').name='signUp'">Sign up
         </button>
     </form>
 </div>

@@ -24,35 +24,35 @@ public class LoginController {
     @Autowired
     UserService userService;
 
-
     @RequestMapping(path = {"/login"}, method = {RequestMethod.GET})
     public String loginGet(Model model) {
         return "login";
     }
 
-    @RequestMapping(path = {"/login"}, method = {RequestMethod.POST})
-    public String loginPost(Model model, @RequestParam("type") String type, @RequestParam("inputName") String name, @RequestParam("inputPassword") String password,HttpServletResponse httpServletResponse,HttpServletRequest httpServletRequest) {
-       String rememberMe= httpServletRequest.getParameter("rememberMe");
+    @RequestMapping(path = {"/login"}, method = {RequestMethod.POST}, params = {"signIn", "inputName", "inputPassword"})
+    public String loginSignInPost(Model model, @RequestParam("inputName") String name, @RequestParam("inputPassword") String password, HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) {
+        String rememberMe = httpServletRequest.getParameter("rememberMe");
         Map<String, String> map;
-        if (type.equals("signIn")) {
-            map = userService.login(name, password,rememberMe);
-            model.addAllAttributes(map);
+        map = userService.login(name, password, rememberMe);
+        model.addAllAttributes(map);
+        if (map.get("msg").equals("success")) {
+            Cookie cookie = new Cookie("ticket", map.get("ticket"));
+            httpServletResponse.addCookie(cookie);
+            return "redirect:/";
+        }
+        return "login";
+    }
 
-            if (map.get("msg").equals("success")) {
-                Cookie cookie=new Cookie("ticket",map.get("ticket"));
-                httpServletResponse.addCookie(cookie);
-                return "redirect:/";
-            }
-        } else if (type.equals("signUp")) {
-            map = userService.register(name, password,rememberMe);
-            model.addAllAttributes(map);
-            if (map.get("msg").equals("success")) {
-                Cookie cookie=new Cookie("ticket",map.get("ticket"));
-                httpServletResponse.addCookie(cookie);
-                return "redirect:/";
-            }
-        } else {
-            model.addAttribute("msg", "Unexpected error!");
+    @RequestMapping(path = {"/login"}, method = {RequestMethod.POST}, params = {"signUp", "inputName", "inputPassword"})
+    public String loginSignUpPost(Model model, @RequestParam("inputName") String name, @RequestParam("inputPassword") String password, HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) {
+        String rememberMe = httpServletRequest.getParameter("rememberMe");
+        Map<String, String> map;
+        map = userService.register(name, password, rememberMe);
+        model.addAllAttributes(map);
+        if (map.get("msg").equals("success")) {
+            Cookie cookie = new Cookie("ticket", map.get("ticket"));
+            httpServletResponse.addCookie(cookie);
+            return "redirect:/";
         }
         return "login";
     }

@@ -18,6 +18,42 @@ public class User {
     String salt;
     String password;
 
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setFollowers(int followers) {
+        this.followers = followers;
+    }
+
+    public void setFollowing(int following) {
+        this.following = following;
+    }
+
+    public void setPosts(int posts) {
+        this.posts = posts;
+    }
+
     public int getId() {
         return id;
     }

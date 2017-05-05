@@ -5,97 +5,120 @@
     <link href="/css/setting.css" rel="stylesheet"/>
 </head>
 <body>
-<div th:include="nav :: target" th:with="settingOn=true"></div>
+<div th:replace="nav :: target" th:with="settingOn=true"></div>
 <div class="container">
-    <form class="form-horizontal" method="post" action="/setting">
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Username</label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" disabled="disabled" value="mythsman"/>
+    <div class="panel">
+        <ul class="nav nav-tabs ">
+            <li th:class="${module}=='profile'?'active' " >
+                <a href="#profile" data-toggle="tab">
+                    Profile
+                </a>
+            </li>
+            <li th:class="${module}=='password'?'active' " >
+                <a href="#password" data-toggle="tab">
+                    Password
+                </a>
+            </li>
+
+        </ul>
+        <div class="tab-content">
+            <div th:class="${module}=='profile'?'tab-pane fade in active':'tab-pane fade'" id="profile">
+                <form class="form-horizontal" method="post" action="/setting">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" >Username</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" disabled="disabled" value="mythsman"
+                                   th:value="${user}?${user.name}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Website</label>
+                        <div class="col-sm-8">
+                            <input name="website" type="url" class="form-control" placeholder="Website" th:value="${user}?${user.website}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Email</label>
+                        <div class="col-sm-8">
+                            <input name="email" type="email" class="form-control" placeholder="Email" th:value="${user}?${user.email}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Phone</label>
+                        <div class="col-sm-8">
+                            <input name="phone" type="tel" class="form-control" placeholder="Phone" th:value="${user}?${user.phone}" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Gender</label>
+                        <div class="col-sm-8">
+                            <select name="gender" class="btn btn-default" >
+                                <option th:selected="${user}?${user.gender}=='male'" value="male">Male</option>
+                                <option th:selected="${user}?${user.gender}=='female'" value="female">Female</option>
+                                <option th:selected="${user}?${user.gender}=='unknown'" value="unknown">Unknown</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Biography</label>
+                        <div class="col-sm-8">
+                            <textarea name="biography" class="form-control" placeholder="Biography" maxlength="100" rows="3" th:text="${user}?${user.biography}"/>
+                        </div>
+                    </div>
+
+                    <label th:text="${msgprofile}" class="col-md-12 col-xs-12">hhh</label>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div th:class="${module}=='password'?'tab-pane fade in active':'tab-pane fade'" id="password">
+                <form class="form-horizontal" method="post" action="/setting">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Old</label>
+                        <div class="col-sm-8">
+                            <input name="oldpasswd" type="password" class="form-control" placeholder="Old password"
+                                   required="required"  />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">New</label>
+                        <div class="col-sm-8">
+                            <input name="newpasswd" type="password" class="form-control" placeholder="New password"
+                                   required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">ReInput</label>
+                        <div class="col-sm-8">
+                            <input name="reinput" type="password" class="form-control"
+                                   placeholder="ReInput new password"
+                                   required="required"/>
+                        </div>
+                    </div>
+
+                    <label th:text="${msgpasswd}" class="col-md-12 col-xs-12">hhh</label>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-
-
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Website</label>
-            <div class="col-sm-8">
-                <input type="url" class="form-control" placeholder="Website"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Email</label>
-            <div class="col-sm-8">
-                <input type="email" class="form-control" placeholder="Email"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Phone</label>
-            <div class="col-sm-8">
-                <input type="tel" class="form-control" placeholder="Phone"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Gender</label>
-            <div class="col-sm-8">
-                <select class="btn btn-default">
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
-                    <option value="3">Unknown</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Biography</label>
-            <div class="col-sm-8">
-                <textarea  class="form-control" placeholder="Biography"/>
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            <div class="col-sm-offset-4 col-sm-8">
-                <button type="submit" class="btn btn-default">Submit</button>
-            </div>
-        </div>
-    </form>
-
-
-    <form class="form-horizontal" method="post" action="/setting">
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Old</label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" placeholder="Old password" required="required"/>
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <label class="col-sm-4 control-label">New</label>
-            <div class="col-sm-8">
-                <input type="password" class="form-control" placeholder="New password" required="required" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-4 control-label">ReInput</label>
-            <div class="col-sm-8">
-                <input type="password" class="form-control" placeholder="ReInput new password" required="required"/>
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-sm-offset-4 col-sm-8">
-                <button type="submit" class="btn btn-default">Submit</button>
-            </div>
-        </div>
-    </form>
-
+    </div>
 </div>
 </body>
 </html>

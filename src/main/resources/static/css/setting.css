@@ -2,5 +2,13 @@
 .form-horizontal {
     max-width: 330px;
     padding: 15px;
-    margin: 10% auto;
+    margin: auto;
+}
+.panel{
+    max-width: 330px;
+    margin: 40px auto;
+}
+
+.form-group .control-label {
+    text-align: left;
 }
