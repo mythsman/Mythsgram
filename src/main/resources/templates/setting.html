@@ -9,17 +9,16 @@
 <div class="container">
     <div class="panel">
         <ul class="nav nav-tabs ">
-            <li th:class="${module}=='profile'?'active' " >
+            <li th:class="${module}=='profile'?'active'" >
                 <a href="#profile" data-toggle="tab">
                     Profile
                 </a>
             </li>
-            <li th:class="${module}=='password'?'active' " >
+            <li th:class="${module}=='password'?'active'" >
                 <a href="#password" data-toggle="tab">
                     Password
                 </a>
             </li>
-
         </ul>
         <div class="tab-content">
             <div th:class="${module}=='profile'?'tab-pane fade in active':'tab-pane fade'" id="profile">
