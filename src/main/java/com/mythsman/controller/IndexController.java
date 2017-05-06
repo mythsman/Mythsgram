@@ -1,7 +1,10 @@
 package com.mythsman.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.mythsman.model.Post;
 import com.mythsman.model.User;
+import com.mythsman.service.CommentService;
+import com.mythsman.service.PostService;
 import com.mythsman.service.UserComponent;
 import com.mythsman.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -25,13 +28,29 @@ public class IndexController {
     UserService userService;
 
     @Autowired
+    PostService postService;
+
+    @Autowired
     UserComponent userComponent;
 
-    @RequestMapping(path = {"index", "/"})
+    @Autowired
+    CommentService commentService;
+
+    @RequestMapping(path = {"index", "/"},method = {RequestMethod.GET})
     public String index(Model model) {
-
-
+        if(userComponent.getUser()==null){
+            return "redirect:/login";
+        }
+        Map<String,List<Map<String ,Object>>> posts=postService.getPostViews();
+        model.addAllAttributes(posts);
         return "index";
+    }
+
+    @RequestMapping(path = {"index", "/"},method = {RequestMethod.POST},params={"post_id","comment"})
+    @ResponseBody
+    public String index(@RequestParam("post_id")int postId,@RequestParam("comment")String comment) {
+        Map<String,String> map=commentService.addComment(postId,comment);
+        return JSON.toJSONString(map);
     }
 
     @RequestMapping(path = {"/explore"})

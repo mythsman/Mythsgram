@@ -34,25 +34,28 @@ public class PostService {
     @Autowired
     UserDao userDao;
 
-    public List<Map<String ,Object>> getPostView(){
-        List<Map<String,Object>> userAndPostList=new ArrayList<>();
+    public Map<String,List<Map<String ,Object>>> getPostViews(){
+        List<Map<String,Object>> posts=new ArrayList<>();
 
         for(Post post:postDao.selectPostsByUid(userComponent.getUser().getId())){
-            Map<String,Object>mapPost=new HashMap<>();
-            mapPost.put("user",userDao.selectById(post.getUid()));
-            List<Map<String,Object>> userAndCommentList=new ArrayList<>() ;
+            Map<String,Object>postItem=new HashMap<>();
+            postItem.put("user",userDao.selectById(post.getUid()));
+            List<Map<String,Object>> comments=new ArrayList<>() ;
             for(Comment comment:commentDao.selectCommentsByPostId(post.getId())){
-                Map<String ,Object> commentMap=new HashMap<>();
-                commentMap.put("user",userDao.selectById(comment.getUid()));
-                commentMap.put("comment",comment);
-                userAndCommentList.add(commentMap);
+                Map<String ,Object> commentItem=new HashMap<>();
+                commentItem.put("user",userDao.selectById(comment.getUid()));
+                commentItem.put("comment",comment);
+                comments.add(commentItem);
             }
-            mapPost.put("post",userAndCommentList);
-
-            userAndPostList.add(mapPost);
+            postItem.put("comments",comments);
+            postItem.put("post",post);
+            postItem.put("user",userComponent.getUser());
+            posts.add(postItem);
         }
-        //TODO bugs...
-        return userAndPostList;
+
+        Map<String,List<Map<String ,Object>>> result=new HashMap<>();
+        result.put("posts",posts);
+        return result;
     }
 
 

@@ -7,32 +7,42 @@
 <body>
 <div th:include="nav :: target" th:with="homeOn=true"></div>
 <div class="container">
-    <div class="panel panel-default" th:each="post :${posts}">
-
+    <div class="panel panel-default" th:each="postItem :${posts}">
         <div class="panel-heading ">
             <div class="panel-title">
                 <div class="row">
-                    <div class="col-md-1 col-xs-1"><img class="img-responsive img-thumbnail img-circle" th:src="@{post.src}"/></div>
-                    <div class="col-md-11 col-xs-11" th:text="${post.name}">Panel title</div>
+                    <div class="col-md-1 col-xs-1"><img class="img-responsive img-thumbnail img-circle" th:src="${postItem.post.src}"/></div>
+                    <div class="col-md-11 col-xs-11" th:text="${postItem.user.name}">Panel title</div>
                 </div>
             </div>
         </div>
         <div class="panel-body">
             <img class="img-responsive" style="width:100%" src="/img/1.jpg"/>
             <hr/>
-            <div><span th:text="${post.likes}">12</span><span> likes</span></div>
-            <div th:each="comment :${comments}"><span th:text="${comment.name}">somebody:</span><div th:text="${comment.content}">dfdsfa</div></div>
+            <div>
+                <span th:text="${postItem.post.likes}">12</span><span> likes</span>
+            </div>
+            <div>
+                <span th:text="${postItem.user.name}+': '">somebody:</span><span th:text="${postItem.post.title}">dfdsfa</span>
+            </div>
+
+            <div th:each="commentItem :${postItem.comments}">
+                <span th:text="${commentItem.user.name}+': '">somebody:</span><span th:text="${commentItem.comment.content}">dfdsfa</span>
+            </div>
+            <div id="insert"></div>
             <hr/>
-            <form class="form-horizontal">
+            <form class="form-horizontal" >
+                <input id="username" type="hidden" th:value="${user.name}" />
+                <input id="postId" type="hidden" th:value="${postItem.post.id}" />
                 <div class="form-group">
                     <div class="col-md-2 col-xs-2 star">
-                        <input class="form-control" type="button" value="Star"/>
+                        <input id="starBtn" class="form-control" type="button" value="Star"/>
                     </div>
                     <div class="col-md-8 col-xs-8">
-                        <input class="form-control input-text" type="text" placeholder="Please add your comment."/>
+                        <input id="comment" class="form-control input-text" type="text" placeholder="Please add your comment."/>
                     </div>
                     <div class="col-md-2 col-xs-2 submit">
-                        <input class="form-control" type="submit" value="Submit"/>
+                        <input id="commentBtn" class="form-control" type="button" value="Comment"/>
                     </div>
                 </div>
                 <div th:if="${msg}" class="form-group">
@@ -42,9 +52,31 @@
                 </div>
             </form>
         </div>
-
-
     </div>
 </div>
 </body>
+<script>
+    $(document).ready(function(){
+        $("#commentBtn").click(function(){
+           $.ajax({
+               url:'/index',
+               type:"POST",
+               data:{
+                   post_id: $("#postId").val(),
+                   comment: $("#comment").val()
+               },
+               success:function(result){
+                   result=JSON.parse(result);
+                   if(result['msg']=='ok'){
+                        $("#insert").before('<div><span >'+$("#username").val()+': </span><span>'+$("#comment").val()+'</span></div>');
+                   }else {
+                        alert(result['msg']);
+                   }
+                   $("#comment").val("");
+               },
+           });
+        });
+    });
+
+</script>
 </html>
