@@ -2,11 +2,49 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <header th:replace="header"></header>
+    <link href="/css/index.css" rel="stylesheet"/>
 </head>
 <body>
 <div th:include="nav :: target" th:with="homeOn=true"></div>
 <div class="container">
+    <div class="panel panel-default" th:each="post :${posts}">
 
+        <div class="panel-heading ">
+            <div class="panel-title">
+                <div class="row">
+                    <div class="col-md-1 col-xs-1"><img class="img-responsive img-thumbnail img-circle" th:src="@{post.src}"/></div>
+                    <div class="col-md-11 col-xs-11" th:text="${post.name}">Panel title</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <img class="img-responsive" style="width:100%" src="/img/1.jpg"/>
+            <hr/>
+            <div><span th:text="${post.likes}">12</span><span> likes</span></div>
+            <div th:each="comment :${comments}"><span th:text="${comment.name}">somebody:</span><div th:text="${comment.content}">dfdsfa</div></div>
+            <hr/>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-2 col-xs-2 star">
+                        <input class="form-control" type="button" value="Star"/>
+                    </div>
+                    <div class="col-md-8 col-xs-8">
+                        <input class="form-control input-text" type="text" placeholder="Please add your comment."/>
+                    </div>
+                    <div class="col-md-2 col-xs-2 submit">
+                        <input class="form-control" type="submit" value="Submit"/>
+                    </div>
+                </div>
+                <div th:if="${msg}" class="form-group">
+                    <div class="col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                        <label class="form-control" th:text="${msg}">haha</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
 </div>
 </body>
 </html>

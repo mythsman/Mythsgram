@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header th:replace="header"></header>
+    <link href="/css/homepage.css" rel="stylesheet"/>
+</head>
+<body>
+<div th:include="nav :: target" th:with="userOn=true"></div>
+<div class="container">
+    <div class="panel row">
+        <div class="col-md-3 col-xs-3">
+            <img src="/img/1.jpg" class="img-responsive img-circle img-thumbnail"/>
+        </div>
+        <div class="col-md-9 col-xs-9">
+            <div class="row">
+                <div class="col-md-8 col-xs-8" th:text="${user}?${user.name}"></div>
+                <div class="col-md-4 col-xs-4" >
+                    <button class="btn btn-primary">follow</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-xs-4"><span th:text="${user}?${user.posts}"></span> posts</div>
+                <div class="col-md-4 col-xs-4"><span th:text="${user}?${user.followers}"></span> followers</div>
+                <div class="col-md-4 col-xs-4"><span th:text="${user}?${user.following}"></span> following</div>
+                <div class="col-md-12 col-xs-12"><span th:text="${user}?${user.website}"></span></div>
+                <div class="col-md-12 col-xs-12"><span th:text="${user}?${user.biography}"></span></div>
+            </div>
+
+        </div >
+    </div>
+
+    <div class="row panel">
+        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/1.jpg"/></div>
+        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/2.png"/></div>
+        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/1.jpg"/></div>
+        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/1.jpg"/></div>
+        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/1.jpg"/></div>
+        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/1.jpg"/></div>
+    </div>
+</div>
+</body>
+</html>

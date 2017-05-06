@@ -1,0 +1,31 @@
+.panel {
+    max-width: 600px;
+    margin: 40px auto;
+}
+.star{
+    padding-right:0;
+}
+
+.submit{
+    padding-left:0;
+}
+.col-md-1{
+    margin-left:15px;
+    padding:0 0 0 0;
+}
+.col-md-11{
+    margin-right:-15px;
+    font-size:20px;
+    height:50px;
+    line-height:50px;
+    overflow:hidden;
+}
+
+.panel-heading{
+    padding :0 0 0 0;
+}
+
+div span{
+    text-align: left;
+    font-weight: bold;
+}

@@ -1,4 +1,16 @@
 .panel{
-    max-width: 330px;
+    max-width: 900px;
     margin: 40px auto;
+}
+.row div .col-md-8 {
+    font-size: 40px;
+}
+.row div .col-md-4 button {
+    font-size: 20px;
+}
+.row div{
+    font-size: 20px;
+}
+.panel .col-md-4 {
+    margin:15px auto;
 }

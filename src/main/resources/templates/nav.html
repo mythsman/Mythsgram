@@ -32,16 +32,15 @@
 
                     <li th:unless="${user}" th:class="${loginOn}?'active'" ><a href="/login">Login</a></li>
                     <li th:if="${user}" class="dropdown"
-                        th:class="(${homepageOn} or ${settingOn} or ${mailOn})?'active'">
+                        th:class="(${userOn} or ${settingOn} or ${mailOn})?'active'">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false"><span th:text="${user.name}">User</span> <span
                                 class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li th:class="${homepageOn}?'active'"><a href="/homepage">HomePage</a></li>
+                            <li th:class="${userOn}?'active'"><a href="/user">User</a></li>
                             <li th:class="${settingOn}?'active'"><a href="/setting">Setting</a></li>
-                            <li th:class="${mailOn}?'active'"><a href="/mail">Mail</a></li>
                             <li role="separator" class="divider"></li>
-                            <li th:class="${logoutOn}?'active'"><a href="/logout">Logout</a></li>
+                            <li ><a href="/logout">Logout</a></li>
                         </ul>
                     </li>
                 </ul>

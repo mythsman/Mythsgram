@@ -1,9 +1,7 @@
 package com.mythsman;
 
 import com.mythsman.dao.LoginTicketDao;
-import com.mythsman.dao.UserDao;
 import com.mythsman.model.LoginTicket;
-import com.mythsman.model.User;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,8 +15,7 @@ import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Sql("/initDatabase.sql")
-@Sql("/loginTicketDao.sql")
+@Sql("/loginTicket.sql")
 public class LoginTicketDaoTests {
     private static final Logger logger = Logger.getLogger(LoginTicketDaoTests.class);
 

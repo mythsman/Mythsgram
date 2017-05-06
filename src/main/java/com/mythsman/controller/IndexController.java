@@ -1,6 +1,8 @@
 package com.mythsman.controller;
 
+import com.mythsman.model.Post;
 import com.mythsman.model.User;
+import com.mythsman.service.UserComponent;
 import com.mythsman.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,8 +24,13 @@ public class IndexController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    UserComponent userComponent;
+
     @RequestMapping(path = {"index", "/"})
     public String index(Model model) {
+
+
         return "index";
     }
 
@@ -36,14 +44,9 @@ public class IndexController {
         return "favourite";
     }
 
-    @RequestMapping(path = {"/homepage"})
+    @RequestMapping(path = {"/user"})
     public String homepage(Model model) {
-        return "homepage";
-    }
-
-    @RequestMapping(path = {"/mail"})
-    public String mail(Model model) {
-        return "mail";
+        return "user";
     }
 
     @RequestMapping(path = {"/logout"})

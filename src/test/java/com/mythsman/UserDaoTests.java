@@ -13,8 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Sql("/initDatabase.sql")
-@Sql("/userDao.sql")
+@Sql("/user.sql")
 public class UserDaoTests {
     private static final Logger logger = Logger.getLogger(UserDaoTests.class);
     @Autowired
