@@ -31,7 +31,7 @@ public class PostDaoTests {
     @Test
     public void selectPostByUidTests() throws Exception {
         postDao.selectPostById(1).getSrc();
-        Assert.assertEquals(postDao.selectPostById(1).getSrc(), "www.haha.com");
+        Assert.assertEquals(postDao.selectPostById(1).getSrc(), "/img/1.jpg");
     }
 
     @Test

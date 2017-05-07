@@ -12,3 +12,4 @@ CREATE TABLE `comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `comment` (uid,post_id,content) VALUES ('1','1',"hahahaha");
+INSERT INTO `comment` (uid,post_id,content) VALUES ('1','1',"<div>233</div>");

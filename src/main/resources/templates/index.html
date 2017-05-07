@@ -12,7 +12,8 @@
         <div class="panel-heading ">
             <div class="panel-title">
                 <div class="row">
-                    <div class="col-md-1 col-xs-1"><img class="img-responsive img-thumbnail img-circle" th:src="${postItem.post.src}"/></div>
+                    <div class="col-md-1 col-xs-1"><img class="img-responsive img-thumbnail img-circle"
+                                                        th:src="${postItem.user.avatar}"/></div>
                     <div class="col-md-11 col-xs-11" th:text="${postItem.user.name}">Panel title</div>
                 </div>
             </div>
@@ -24,31 +25,31 @@
                 <span th:text="${postItem.post.likes}">12</span><span> likes</span>
             </div>
             <div>
-                <span th:text="${postItem.user.name}+': '">somebody:</span><span th:text="${postItem.post.title}">dfdsfa</span>
+                <span th:text="${postItem.user.name}+': '">somebody:</span><span
+                    th:text="${postItem.post.title}">dfdsfa</span>
             </div>
 
             <div th:each="commentItem :${postItem.comments}">
-                <span th:text="${commentItem.user.name}+': '">somebody:</span><span th:text="${commentItem.comment.content}">dfdsfa</span>
+                <span th:text="${commentItem.user.name}+': '">somebody:</span><span
+                    th:text="${commentItem.comment.content}">dfdsfa</span>
             </div>
             <div class="insert"></div>
             <hr/>
-            <form class="form-horizontal form" method="post" action="/index">
-                <input name="postId" type="hidden" th:value="${postItem.post.id}" />
+            <form th:id="${postItem.post.id}" class="form-horizontal form" method="post" action="/index">
+                <input name="postId" type="hidden" th:value="${postItem.post.id}"/>
                 <div class="form-group">
                     <div class="col-md-2 col-xs-2 star">
                         <input name="starBtn" class="form-control" type="submit" value="Star"/>
                     </div>
                     <div class="col-md-8 col-xs-8">
-                        <input name="comment" class="form-control input-text" type="text" placeholder="Please add your comment."/>
+                        <input name="comment" class="form-control input-text" type="text"
+                               placeholder="Please add your comment."/>
                     </div>
                     <div class="col-md-2 col-xs-2 submit">
                         <input name="commentBtn" class="form-control" type="submit" value="Comment"/>
                     </div>
                 </div>
-                <div th:if="${msg}" class="form-group">
-                    <div class="col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                        <label class="form-control" th:text="${msg}">haha</label>
-                    </div>
+                <div class="msg">
                 </div>
             </form>
         </div>
@@ -56,38 +57,19 @@
 </div>
 </body>
 <script>
-//    $(document).ready(function(){
-//        $("#commentBtn").click(function(){
-//           $.ajax({
-//               url:'/index',
-//               type:"POST",
-//               data:{
-//                   post_id: $("#postId").val(),
-//                   comment: $("#comment").val()
-//               },
-//               success:function(result){
-//                   result=JSON.parse(result);
-//                   if(result['msg']=='ok'){
-//                        $("#insert").before('<div><span >'+$("#username").val()+': </span><span>'+$("#comment").val()+'</span></div>');
-//                   }else {
-//                        alert(result['msg']);
-//                   }
-//                   $("#comment").val("");
-//               },
-//           });
-//        });
-//    });
-
-    $(document).ready(function() {
-        $('.form').ajaxForm(function(data) {
-            data=JSON.parse(data);
-            if(data['msg']=='ok'){
-                this.siblings(".insert")[0].before('<div><span >'+this.$("#username").val()+': </span><span>'+$("#comment").val()+'</span></div>');
-            }else{
-
+    $(document).ready(function () {
+        $('.form').ajaxForm(function (data) {
+            $('.input-text').val('');
+            data = JSON.parse(data);
+            if (data['msg']=='ok'){
+                var comment=$('<div/>').text(data['comment']).html();
+                $('#'+data['id']).siblings(".insert").before("<div><span>" + data['username'] + ": </span><span>" + comment+ "</span></div>");
+                $('#'+data['id']).find('div.msg').html('');
+            } else {
+                var insert=('<div class="form-group "><div class="col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2"><label class="form-control">'+data['msg']+'</label></div></div>')
+                $('#'+data['id']).find('div.msg').html(insert);
             }
         });
     });
-
 </script>
 </html>

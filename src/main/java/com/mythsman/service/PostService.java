@@ -1,14 +1,11 @@
 package com.mythsman.service;
 
 import com.mythsman.dao.CommentDao;
-import com.mythsman.dao.LoginTicketDao;
 import com.mythsman.dao.PostDao;
 import com.mythsman.dao.UserDao;
 import com.mythsman.model.Comment;
-import com.mythsman.model.LoginTicket;
 import com.mythsman.model.Post;
 import com.mythsman.model.User;
-import com.mythsman.util.Util;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +31,7 @@ public class PostService {
     @Autowired
     UserDao userDao;
 
-    public Map<String,List<Map<String ,Object>>> getPostViews(){
+    public Map<String,List<Map<String ,Object>>> getPostsAndComments(){
         List<Map<String,Object>> posts=new ArrayList<>();
 
         for(Post post:postDao.selectPostsByUid(userComponent.getUser().getId())){
@@ -58,5 +55,13 @@ public class PostService {
         return result;
     }
 
+    public Map<String,Object> getPosts(){
+        User user=userComponent.getUser();
+        List<Post>list=postDao.selectPostsByUid(user.getId());
+        Map<String,Object> map=new HashMap<>();
+        map.put("posts",list);
+        return map;
+
+    }
 
 }

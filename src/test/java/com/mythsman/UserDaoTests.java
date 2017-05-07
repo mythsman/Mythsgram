@@ -34,7 +34,7 @@ public class UserDaoTests {
 
     @Test
     public void selectByNameTests() {
-        String name="myths1";
+        String name="123";
         User user = userDAO.selectByName(name);
         logger.info(user.getId()+" "+user.getName());
     }

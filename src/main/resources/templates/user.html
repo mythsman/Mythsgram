@@ -9,11 +9,11 @@
 <div class="container">
     <div class="panel row">
         <div class="col-md-3 col-xs-3">
-            <img src="/img/1.jpg" class="img-responsive img-circle img-thumbnail"/>
+            <img th:src="${user.avatar}" class="img-responsive img-circle img-thumbnail"/>
         </div>
         <div class="col-md-9 col-xs-9">
             <div class="row">
-                <div class="col-md-8 col-xs-8" th:text="${user}?${user.name}"></div>
+                <div class="col-md-8 col-xs-8" th:text="${user.name}"></div>
                 <div class="col-md-4 col-xs-4" >
                     <button class="btn btn-primary">follow</button>
                 </div>
@@ -25,17 +25,11 @@
                 <div class="col-md-12 col-xs-12"><span th:text="${user}?${user.website}"></span></div>
                 <div class="col-md-12 col-xs-12"><span th:text="${user}?${user.biography}"></span></div>
             </div>
-
         </div >
     </div>
 
     <div class="row panel">
-        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/1.jpg"/></div>
-        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/2.png"/></div>
-        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/1.jpg"/></div>
-        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/1.jpg"/></div>
-        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/1.jpg"/></div>
-        <div class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" src="/img/1.jpg"/></div>
+        <div th:each="post :${posts}" class="col-md-4 col-xs-4"><img class="img-responsive img-thumbnail" style="width:100%" th:src="${post.src}"/></div>
     </div>
 </div>
 </body>

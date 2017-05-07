@@ -4,7 +4,8 @@ import com.mythsman.dao.LoginTicketDao;
 import com.mythsman.dao.UserDao;
 import com.mythsman.model.LoginTicket;
 import com.mythsman.model.User;
-import com.mythsman.util.Util;
+import com.mythsman.util.Md5;
+import com.mythsman.util.WordFilterService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,9 @@ public class UserService {
     @Autowired
     UserComponent userComponent;
 
+    @Autowired
+    WordFilterService wordFilterService;
+
     public Map<String, String> register(String name, String password, String rememberMe) {
         Map<String, String> map = new HashMap<>();
         if (name.length() >= 20) {
@@ -45,7 +49,7 @@ public class UserService {
         }
 
         String salt = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5);
-        password = Util.MD5(password + salt);
+        password = Md5.md5(password + salt);
         userDao.addUser(name, salt, password);
 
         map.put("msg", "success");
@@ -60,7 +64,7 @@ public class UserService {
         if (user == null) {
             map.put("msg", "User doesn't exist.");
             return map;
-        } else if (Util.MD5(password + user.getSalt()).equals(user.getPassword())) {
+        } else if (Md5.md5(password + user.getSalt()).equals(user.getPassword())) {
             map.put("msg", "success");
             String ticket = addLoginTicket(user.getId(), rememberMe);
             map.put("ticket", ticket);
@@ -90,7 +94,10 @@ public class UserService {
         user.setEmail(email);
         user.setPhone(phone);
         user.setGender(gender);
+
+        biography=wordFilterService.filter(biography);
         user.setBiography(biography);
+
         userComponent.setUser(user);
         userDao.updateProfile(user);
         map.put("msg", "success");
@@ -112,12 +119,12 @@ public class UserService {
             map.put("msg", "Not valid.");
             return map;
         }
-        if (!Util.MD5(oldpasswd + user.getSalt()).equals(user.getPassword())) {
+        if (!Md5.md5(oldpasswd + user.getSalt()).equals(user.getPassword())) {
             map.put("msg", "Wrong password.");
             return map;
         }
         String salt = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5);
-        newpasswd = Util.MD5(newpasswd + salt);
+        newpasswd = Md5.md5(newpasswd + salt);
         userDao.updatePassword(user.getId(), salt, newpasswd);
         map.put("msg", "success");
         return map;
@@ -140,6 +147,4 @@ public class UserService {
 
         return loginTicket.getTicket();
     }
-
-
 }

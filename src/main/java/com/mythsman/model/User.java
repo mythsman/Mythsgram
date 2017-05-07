@@ -18,6 +18,16 @@ public class User {
     String salt;
     String password;
 
+    String avatar;
+    String website;
+    String biography;
+    String email;
+    String phone;
+    Date date;
+    int followers;
+    int following;
+    int posts;
+
     public void setGender(String gender) {
         this.gender = gender;
     }
@@ -110,15 +120,6 @@ public class User {
         return posts;
     }
 
-    String avatar;
-    String website;
-    String biography;
-    String email;
-    String phone;
-    Date date;
-    int followers;
-    int following;
-    int posts;
 
     public User(int id, String gender, String name, String salt, String password, String avatar, String website, String biography, String email, String phone, Timestamp timestamp, int followers, int following, int posts) {
         this.id = id;
