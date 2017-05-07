@@ -46,9 +46,9 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(path = {"index", "/"},method = {RequestMethod.POST},params={"post_id","comment"})
+    @RequestMapping(path = {"index", "/"},method = {RequestMethod.POST},params={"postId","comment","commentBtn"})
     @ResponseBody
-    public String index(@RequestParam("post_id")int postId,@RequestParam("comment")String comment) {
+    public String index(@RequestParam("postId")int postId,@RequestParam("comment")String comment) {
         Map<String,String> map=commentService.addComment(postId,comment);
         return JSON.toJSONString(map);
     }
