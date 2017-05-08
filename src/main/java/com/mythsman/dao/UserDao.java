@@ -20,10 +20,9 @@ public interface UserDao {
     @Select({"select * from `user` where name=#{name}"})
     User selectByName(@Param("name") String name);
 
-    @Update({"update `user` set website=#{website} , email=#{email} ,phone=#{phone} ,gender=#{gender},biography=#{biography} where id=#{id}"})
+    @Update({"update `user` set website=#{website} , email=#{email} ,phone=#{phone} ,gender=#{gender},biography=#{biography},followers=#{followers}, following=#{following},posts=#{posts} where id=#{id}"})
     void updateProfile(User user);
 
     @Insert({"update `user` set salt=#{salt},password=#{password} where id=#{id}"})
     void updatePassword(@Param("id")int id, @Param("salt") String salt, @Param("password") String password);
-
 }

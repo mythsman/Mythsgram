@@ -82,12 +82,14 @@ public class UserService {
     public Map<String, String> updateProfile(String website, String email, String phone, String gender, String biography) {
         Map<String, String> map = new HashMap<>();
         if (website.length() > 40 || email.length() > 40 || phone.length() > 20 || (!gender.equals("male") && !gender.equals("female") && !gender.equals("unknown"))) {
-            map.put("msg", "Input is too long.");
+            map.put("msg", "Your input is too long!");
+            map.put("code", "0");
             return map;
         }
         User user = userComponent.getUser();
         if (user == null) {
-            map.put("msg", "Not login.");
+            map.put("msg", "Please login first !");
+            map.put("code", "0");
             return map;
         }
         user.setWebsite(website);
@@ -100,7 +102,9 @@ public class UserService {
 
         userComponent.setUser(user);
         userDao.updateProfile(user);
-        map.put("msg", "success");
+        map.put("msg", "Update profile successfully!");
+        map.put("code", "1");
+
         return map;
     }
 
@@ -108,25 +112,30 @@ public class UserService {
         Map<String, String> map = new HashMap<>();
         User user = userComponent.getUser();
         if (user == null) {
-            map.put("msg", "Not login.");
+            map.put("msg", "Pleas login first!");
+            map.put("code","0");
             return map;
         }
         if (!newpasswd.equals(reinput)) {
-            map.put("msg", "Not equal.");
+            map.put("msg", "Please input the new passwrods twice!");
+            map.put("code","0");
             return map;
         }
         if (newpasswd.length() > 20 || newpasswd.length() < 1) {
-            map.put("msg", "Not valid.");
+            map.put("msg", "Your new password is not valid!");
+            map.put("code","0");
             return map;
         }
         if (!Md5.md5(oldpasswd + user.getSalt()).equals(user.getPassword())) {
-            map.put("msg", "Wrong password.");
+            map.put("msg", "Your old password is wrong!");
+            map.put("code","0");
             return map;
         }
         String salt = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 5);
         newpasswd = Md5.md5(newpasswd + salt);
         userDao.updatePassword(user.getId(), salt, newpasswd);
-        map.put("msg", "success");
+        map.put("msg", "Update password successfully!");
+        map.put("code","1");
         return map;
     }
 

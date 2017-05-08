@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class Comment {
     int id;
-    String postId;
+    int post_id;
     int uid;
     String content;
     Date date;
@@ -29,12 +29,12 @@ public class Comment {
         this.id = id;
     }
 
-    public String getPostId() {
-        return postId;
+    public int getPost_id() {
+        return post_id;
     }
 
-    public void setPostId(String postId) {
-        this.postId = postId;
+    public void setPost_id(int post_id) {
+        this.post_id = post_id;
     }
 
 

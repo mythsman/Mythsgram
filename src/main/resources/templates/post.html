@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header th:replace="header"></header>
+    <link href="/css/post.css" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:include="nav :: target" th:with="postOn=true"></div>
+<div class="container">
+
+    <div class="panel panel-default">
+        <div class="panel-heading ">
+            <div class="panel-title">NEW POST
+            </div>
+        </div>
+        <div class="panel-body">
+            <form id="form" class="form-horizontal" method="post" action="/post" enctype="multipart/form-data" >
+                <div id="imgRow" class="row">
+                    <img  class="img-responsive col-md-12 col-xs-12" id="img" />
+                </div>
+                <hr/>
+                <div class="row">
+                    <input id="file" name="file" class="form-control col-md-12 col-xs-12 " type="file" required="required" />
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-xs-2"><span>Title:</span></div>
+                    <input id="title" name="title" class="col-md-10 col-xs-10" type="text" placeholder="Please input your title." accept="image/*" required="required"/>
+                </div>
+                <div class="row">
+                    <input class="form-control col-md-12 col-xs-12 btn btn-primary" type="submit" value="submit" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">From server</h4>
+            </div>
+            <div class="modal-body">
+                <p id="msg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</body>
+<script>
+    $(document).ready(function () {
+        $('#file').change(function () {
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return;
+            if (/^image/.test(files[0].type)) {
+                var reader = new FileReader();
+                reader.readAsDataURL(files[0]);
+                reader.onloadend = function () {
+                    $("#img").attr("src", this.result);
+                }
+            }
+        });
+        $('#form').ajaxForm(function(data){
+            data=JSON.parse(data);
+            $("#msg").html(data['msg']);
+            $("#myModal").modal();
+            if(data['code']=='1'){
+                $("#file").val("");
+                $("#title").val("");
+                $("#imgRow").html(' <img  class="img-responsive col-md-12 col-xs-12" id="img" />');
+            }
+        })
+    });
+</script>
+</html>

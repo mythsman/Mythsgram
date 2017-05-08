@@ -19,11 +19,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 col-xs-4"><span th:text="${user}?${user.posts}"></span> posts</div>
-                <div class="col-md-4 col-xs-4"><span th:text="${user}?${user.followers}"></span> followers</div>
-                <div class="col-md-4 col-xs-4"><span th:text="${user}?${user.following}"></span> following</div>
-                <div class="col-md-12 col-xs-12"><span th:text="${user}?${user.website}"></span></div>
-                <div class="col-md-12 col-xs-12"><span th:text="${user}?${user.biography}"></span></div>
+                <div class="col-md-4 col-xs-4"><span th:text="${user.posts}"></span> posts</div>
+                <div class="col-md-4 col-xs-4"><span th:text="${user.followers}"></span> followers</div>
+                <div class="col-md-4 col-xs-4"><span th:text="${user.following}"></span> following</div>
+                <div class="col-md-12 col-xs-12"><span th:text="${user.website}"></span></div>
+                <div class="col-md-12 col-xs-12"><span th:text="${user.biography}"></span></div>
             </div>
         </div >
     </div>

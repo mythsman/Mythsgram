@@ -21,10 +21,10 @@ public interface PostDao {
     @Update({"update post set valid=#{valid} where id=#{id}"})
     void updateValid(@Param("id") int id,@Param("valid") int valid);
 
-    @Select({"select * from post where uid=#{uid}"})
+    @Select({"select * from post where uid=#{uid} order by date"})
     List<Post> selectPostsByUid(@Param("uid") int uid);
 
-    @Select({"select * from post where id=#{id}"})
+    @Select({"select * from post where id=#{id} order by date"})
     Post selectPostById(@Param("id") int id);
 
     @Update({"update post set likes=#{likes}"})

@@ -1,15 +1,16 @@
 package com.mythsman.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.mythsman.service.CommentService;
-import com.mythsman.service.PostService;
-import com.mythsman.service.UserComponent;
-import com.mythsman.service.UserService;
+import com.mythsman.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +21,6 @@ import java.util.Map;
 public class IndexController {
 
     @Autowired
-    UserService userService;
-
-    @Autowired
     PostService postService;
 
     @Autowired
@@ -30,6 +28,9 @@ public class IndexController {
 
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    StarService starService;
 
     @RequestMapping(path = {"index", "/"}, method = {RequestMethod.GET})
     public String index(Model model) {
@@ -41,44 +42,19 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(path = {"index", "/"}, method = {RequestMethod.POST}, params = {"postId", "comment", "commentBtn"})
+    @RequestMapping(path = {"index", "/"}, method = {RequestMethod.POST}, params = {"post_id", "comment", "commentBtn"})
     @ResponseBody
-    public String addComment(@RequestParam("postId") int postId, @RequestParam("comment") String comment) {
-        Map<String, String> map = commentService.addComment(postId, comment);
+    public String addComment(@RequestParam("post_id") int post_id, @RequestParam("comment") String comment) {
+        Map<String, String> map = commentService.addComment(post_id, comment);
         return JSON.toJSONString(map);
     }
 
-    @RequestMapping(path = {"/explore"})
-    public String explore(Model model) {
-        if (userComponent.getUser() == null) {
-            return "redirect:/login";
-        }
-        return "explore";
-    }
-
-    @RequestMapping(path = {"/favourite"})
-    public String favourite(Model model) {
-        if (userComponent.getUser() == null) {
-            return "redirect:/login";
-        }
-        return "favourite";
-    }
-
-
-    @RequestMapping(path = {"/logout"})
-    public String logout(@CookieValue("ticket") String ticket) {
-        if(userComponent.getUser()==null){
-            return "redirect:/login";
-        }
-        userService.logout(ticket);
-        return "redirect:/login";
-    }
-
-    @RequestMapping(path = {"/search"})
-    public String search(Model model) {
-        if (userComponent.getUser() == null) {
-            return "redirect:/login";
-        }
-        return "search";
+    @RequestMapping(path={"index","/"},method = {RequestMethod.POST},params={"post_id","starBtn","comment"})
+    @ResponseBody
+    public String toggleStar(@RequestParam("post_id")int postId){
+        starService.toggleStar(postId);
+        Map<String,String> map=new HashMap<>();
+        map.put("msg","success");
+        return JSON.toJSONString(map);
     }
 }

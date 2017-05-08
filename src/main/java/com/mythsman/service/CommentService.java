@@ -35,16 +35,18 @@ public class CommentService {
     public  Map<String,String> addComment(int postId,String comment){
         Map<String,String>map=new HashMap<>();
         comment=wordFilterService.filter(comment);
+        map.put("id", Integer.toString(postId));
         if(comment.length()>100||comment.length()<1){
             map.put("msg","Input length error.");
+            map.put("code","0");
             return map;
         }
         User user=userComponent.getUser();
         commentDao.addComment(user.getId(),postId,comment);
-        map.put("msg","ok");
+        map.put("msg","Comment successfully!");
+        map.put("code","1");
         map.put("username", userComponent.getUser().getName());
         map.put("comment", comment);
-        map.put("id", Integer.toString(postId));
         return map;
     }
 

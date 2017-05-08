@@ -3,7 +3,6 @@
 <head>
     <header th:replace="header"></header>
     <link href="/css/index.css" rel="stylesheet"/>
-    <script src="/js/jquery.form.min.js"></script>
 </head>
 <body>
 <div th:include="nav :: target" th:with="homeOn=true"></div>
@@ -19,10 +18,10 @@
             </div>
         </div>
         <div class="panel-body">
-            <img class="img-responsive" style="width:100%" src="/img/1.jpg"/>
+            <img class="img-responsive" style="width:100%" th:src="${postItem.post.src}"/>
             <hr/>
             <div>
-                <span th:text="${postItem.post.likes}">12</span><span> likes</span>
+                <span id="likeNum" th:text="${postItem.post.likes}">12</span><span> likes</span>
             </div>
             <div>
                 <span th:text="${postItem.user.name}+': '">somebody:</span><span
@@ -36,38 +35,59 @@
             <div class="insert"></div>
             <hr/>
             <form th:id="${postItem.post.id}" class="form-horizontal form" method="post" action="/index">
-                <input name="postId" type="hidden" th:value="${postItem.post.id}"/>
+                <input name="post_id" type="hidden" th:value="${postItem.post.id}"/>
                 <div class="form-group">
                     <div class="col-md-2 col-xs-2 star">
-                        <input name="starBtn" class="form-control" type="submit" value="Star"/>
+                        <input name="starBtn" class="form-control starBtn" type="submit" value="Star"/>
                     </div>
                     <div class="col-md-8 col-xs-8">
                         <input name="comment" class="form-control input-text" type="text"
                                placeholder="Please add your comment."/>
                     </div>
                     <div class="col-md-2 col-xs-2 submit">
-                        <input name="commentBtn" class="form-control" type="submit" value="Comment"/>
+                        <input name="commentBtn" class="form-control" type="submit" data-toggle="modal" data-target="#myModal" value="Comment"/>
                     </div>
-                </div>
-                <div class="msg">
                 </div>
             </form>
         </div>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">From server</h4>
+            </div>
+            <div class="modal-body">
+                <p id="msg"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 </body>
 <script>
     $(document).ready(function () {
         $('.form').ajaxForm(function (data) {
             $('.input-text').val('');
             data = JSON.parse(data);
-            if (data['msg']=='ok'){
+            if (data['code']=='1'){
                 var comment=$('<div/>').text(data['comment']).html();
                 $('#'+data['id']).siblings(".insert").before("<div><span>" + data['username'] + ": </span><span>" + comment+ "</span></div>");
-                $('#'+data['id']).find('div.msg').html('');
-            } else {
-                var insert=('<div class="form-group "><div class="col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2"><label class="form-control">'+data['msg']+'</label></div></div>')
-                $('#'+data['id']).find('div.msg').html(insert);
+            }
+            $("#msg").html(data['msg']);
+        });
+        $('.starBtn').click(function(){
+            if($(this).val()=="Star"){
+                $(this).val("Unstar");
+                $("#likeNum").html(parseInt($("#likeNum").html())+1);
+            }else{
+                $(this).val("Star");
+                $("#likeNum").html(parseInt($("#likeNum").html())-1);
             }
         });
     });
