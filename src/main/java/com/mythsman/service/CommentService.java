@@ -44,6 +44,7 @@ public class CommentService {
         User user=userComponent.getUser();
         commentDao.addComment(user.getId(),postId,comment);
         map.put("msg","Comment successfully!");
+        map.put("type","comment");
         map.put("code","1");
         map.put("username", userComponent.getUser().getName());
         map.put("comment", comment);

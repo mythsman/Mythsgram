@@ -20,8 +20,8 @@
         <div class="panel-body">
             <img class="img-responsive" style="width:100%" th:src="${postItem.post.src}"/>
             <hr/>
-            <div>
-                <span id="likeNum" th:text="${postItem.post.likes}">12</span><span> likes</span>
+            <div class="like">
+                <span th:text="${postItem.post.likes}">12</span><span> likes</span>
             </div>
             <div>
                 <span th:text="${postItem.user.name}+': '">somebody:</span><span
@@ -73,21 +73,33 @@
 <script>
     $(document).ready(function () {
         $('.form').ajaxForm(function (data) {
-            $('.input-text').val('');
             data = JSON.parse(data);
-            if (data['code']=='1'){
-                var comment=$('<div/>').text(data['comment']).html();
-                $('#'+data['id']).siblings(".insert").before("<div><span>" + data['username'] + ": </span><span>" + comment+ "</span></div>");
+            if(data['type']=='comment'){
+                $('.input-text').val('');
+                if (data['code']=='1'){
+                    var comment=$('<div/>').text(data['comment']).html();
+                    $('#'+data['id']).siblings(".insert").before("<div><span>" + data['username'] + ": </span><span>" + comment+ "</span></div>");
+                }
+                $("#msg").html(data['msg']);
+            }else if(data['type']=='star'){
+                var starSpan=$($('#'+data['id']).siblings(".like").find("span")[0]);
+                if(data['method']=="add"){
+                    starSpan.html(parseInt(starSpan.html())+1);
+                }else if(data['method']=="rem"){
+                    starSpan.html(parseInt(starSpan.html())-1);
+                }else{
+
+                }
+            }else{
+                //TODO
             }
-            $("#msg").html(data['msg']);
+
         });
         $('.starBtn').click(function(){
             if($(this).val()=="Star"){
                 $(this).val("Unstar");
-                $("#likeNum").html(parseInt($("#likeNum").html())+1);
             }else{
                 $(this).val("Star");
-                $("#likeNum").html(parseInt($("#likeNum").html())-1);
             }
         });
     });

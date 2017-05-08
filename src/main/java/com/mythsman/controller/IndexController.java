@@ -52,9 +52,12 @@ public class IndexController {
     @RequestMapping(path={"index","/"},method = {RequestMethod.POST},params={"post_id","starBtn","comment"})
     @ResponseBody
     public String toggleStar(@RequestParam("post_id")int postId){
-        starService.toggleStar(postId);
+        String method=starService.toggleStar(postId);
         Map<String,String> map=new HashMap<>();
         map.put("msg","success");
+        map.put("type","star");
+        map.put("method",method);
+        map.put("id",String.valueOf(postId));
         return JSON.toJSONString(map);
     }
 }
