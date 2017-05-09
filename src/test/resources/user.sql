@@ -5,7 +5,7 @@ CREATE TABLE `user` (
   `name` varchar(20) NOT NULL,
   `salt` varchar(20) NOT NULL,
   `password` varchar(40) NOT NULL,
-  `avatar` varchar(100) DEFAULT '/img/1.jpg',
+  `avatar` varchar(100) DEFAULT '/img/unknown.png',
   `website` varchar(40) DEFAULT NULL,
   `biography` varchar(150) DEFAULT 'I am lazy.',
   `email` varchar(40) DEFAULT NULL,

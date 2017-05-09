@@ -38,6 +38,7 @@ public class CommentService {
         map.put("id", Integer.toString(postId));
         if(comment.length()>100||comment.length()<1){
             map.put("msg","Input length error.");
+            map.put("type","comment");
             map.put("code","0");
             return map;
         }
