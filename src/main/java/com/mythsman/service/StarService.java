@@ -34,7 +34,7 @@ public class StarService {
         }
     }
 
-    public boolean getStar(int postId,int uid){
+    public boolean isStar(int postId, int uid){
         String key=String.format("STAR:%d",postId);
         String uids=String.valueOf(uid);
         if(jedisAdapter.sisMember(key,uids)){

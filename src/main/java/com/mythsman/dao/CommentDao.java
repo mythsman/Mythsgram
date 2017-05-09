@@ -22,7 +22,4 @@ public interface CommentDao {
     @Update({"update comment set valid=#{valid} where id=#{id}"})
     void updateValid(@Param("id") int id,@Param("valid") int valid);
 
-    @Delete({"delete from `comment` where id=#{id}"})
-    void deleteById(@Param("id")int id);
-
 }

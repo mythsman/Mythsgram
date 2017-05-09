@@ -29,9 +29,5 @@ public class CommentDaoTests {
         Assert.assertEquals(comment.getContent(),"233");
         commentDao.updateValid(comment.getId(),0);
         Assert.assertEquals(commentDao.selectCommentsByPostId(1).get(0).getValid(),0);
-        commentDao.deleteById(comment.getId());
-        Assert.assertEquals(commentDao.selectCommentsByPostId(1).size(),0);
-
     }
-
 }

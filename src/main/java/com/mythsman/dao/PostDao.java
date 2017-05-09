@@ -27,7 +27,7 @@ public interface PostDao {
     @Select({"select * from post where id=#{id} order by date desc"})
     Post selectPostById(@Param("id") int id);
 
-    @Update({"update post set likes=#{likes}"})
+    @Update({"update post set likes=#{likes} where id=#{id}"})
     void updateLikes(@Param("id") int id,@Param("likes") int likes);
 
 }

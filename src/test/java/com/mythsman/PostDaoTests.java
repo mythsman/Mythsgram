@@ -22,37 +22,18 @@ public class PostDaoTests {
     PostDao postDao;
 
     @Test
-    public void addPostTests() throws Exception {
-        postDao.addPost(2, "https://www.baidu.com","this is title.");
-        Post post = postDao.selectPostById(2);
+    public void tests() throws Exception {
+        postDao.addPost(1, "https://www.baidu.com","this is title.");
+        Post post = postDao.selectPostById(1);
         Assert.assertEquals(post.getSrc(), "https://www.baidu.com");
-    }
-
-    @Test
-    public void selectPostByUidTests() throws Exception {
-        postDao.selectPostById(1).getSrc();
-        Assert.assertEquals(postDao.selectPostById(1).getSrc(), "/img/1.jpg");
-    }
-
-    @Test
-    public void selectPostsByUidTests() {
+        postDao.updateValid(1, 0);
+        Assert.assertEquals(postDao.selectPostById(1).getValid(), 0);
         List<Post> posts=postDao.selectPostsByUid(1);
         Assert.assertNotNull(posts);
-        for(Post post :posts){
-            Assert.assertEquals(post.getUid(),1);
+        for(Post postx :posts){
+            Assert.assertEquals(postx.getUid(),1);
         }
     }
 
-    @Test
-    public void updateValidTests() throws Exception {
-        postDao.updateValid(1, 0);
-        Assert.assertEquals(postDao.selectPostById(1).getValid(), 0);
-    }
-
-    @Test
-    public void updateLikesTests() throws Exception {
-        postDao.updateLikes(1, 10);
-        Assert.assertEquals(postDao.selectPostById(1).getLikes(), 10);
-    }
 
 }

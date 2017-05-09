@@ -21,33 +21,19 @@ public class UserDaoTests {
 
     @Test
     public void addUserTests() {
-        int res=userDAO.addUser("myths", "eread", "32434324");
-        logger.info(res);
-    }
-
-    @Test
-    public void selectByIdTests() {
+        userDAO.addUser("myths", "12345", "32434324");
         int id = 1;
         User user = userDAO.selectById(id);
-        logger.info(user.getId()+" "+user.getName());
-    }
-
-    @Test
-    public void selectByNameTests() {
-        String name="123";
-        User user = userDAO.selectByName(name);
-        logger.info(user.getId()+" "+user.getName());
-    }
-
-    @Test
-    public void updateProfileTests(){
+        Assert.assertEquals(user.getName(),"myths");
+        user = userDAO.selectByName("myths");
+        Assert.assertEquals(user.getSalt(),"12345");
         String website="www.baidu.com";
         String email="root@mythsman.com";
         String phone="110";
         String gender="male";
         String biography="who am i";
 
-        User user=userDAO.selectById(1);
+        user=userDAO.selectById(1);
         user.setWebsite(website);
         user.setEmail(email);
         user.setPhone(phone);
