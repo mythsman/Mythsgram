@@ -30,7 +30,7 @@ public class IndexController {
     CommentService commentService;
 
     @Autowired
-    StarService starService;
+    LikeService likeService;
 
     @RequestMapping(path = {"index", "/"}, method = {RequestMethod.GET})
     public String index(Model model) {
@@ -52,7 +52,7 @@ public class IndexController {
     @RequestMapping(path={"index","/"},method = {RequestMethod.POST},params={"post_id","starBtn","comment"})
     @ResponseBody
     public String toggleStar(@RequestParam("post_id")int postId){
-        String method=starService.toggleStar(postId);
+        String method= likeService.toggleLike(postId);
         Map<String,String> map=new HashMap<>();
         map.put("msg","success");
         map.put("type","star");

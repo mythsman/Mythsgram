@@ -2,6 +2,7 @@ package com.mythsman.service;
 
 import com.mythsman.dao.PostDao;
 import com.mythsman.util.JedisAdapter;
+import com.mythsman.util.JedisKeys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
  * Created by myths on 17-5-4.
  */
 @Service
-public class StarService {
+public class LikeService {
 
     @Autowired
     UserComponent userComponent;
@@ -20,8 +21,8 @@ public class StarService {
     @Autowired
     PostDao postDao;
 
-    public String toggleStar(int postId){
-        String key=String.format("STAR:%d",postId);
+    public String toggleLike(int postId){
+        String key= JedisKeys.getLikeKey(postId);
         String uid=String.valueOf(userComponent.getUser().getId());
         if(jedisAdapter.sisMember(key,uid)){
             jedisAdapter.srem(key,uid);
@@ -34,8 +35,8 @@ public class StarService {
         }
     }
 
-    public boolean isStar(int postId, int uid){
-        String key=String.format("STAR:%d",postId);
+    public boolean isLike(int postId, int uid){
+        String key= JedisKeys.getLikeKey(postId);
         String uids=String.valueOf(uid);
         if(jedisAdapter.sisMember(key,uids)){
             return true;

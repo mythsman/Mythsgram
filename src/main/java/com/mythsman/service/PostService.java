@@ -6,6 +6,7 @@ import com.mythsman.dao.UserDao;
 import com.mythsman.model.Comment;
 import com.mythsman.model.Post;
 import com.mythsman.model.User;
+import com.mythsman.util.JedisAdapter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,33 +41,43 @@ public class PostService implements InitializingBean{
     UserDao userDao;
 
     @Autowired
-    StarService starService;
+    LikeService likeService;
 
+    @Autowired
+    UserService userService;
 
+    @Autowired
+    JedisAdapter jedisAdapter;
 
     public Map<String,List<Map<String ,Object>>> getPostsAndComments(){
-        List<Map<String,Object>> posts=new ArrayList<>();
 
-        for(Post post:postDao.selectPostsByUid(userComponent.getUser().getId())){
-            Map<String,Object>postItem=new HashMap<>();
-            postItem.put("user",userDao.selectById(post.getUid()));
-            List<Map<String,Object>> comments=new ArrayList<>() ;
-            for(Comment comment:commentDao.selectCommentsByPostId(post.getId())){
-                Map<String ,Object> commentItem=new HashMap<>();
-                commentItem.put("user",userDao.selectById(comment.getUid()));
-                commentItem.put("comment",comment);
-                comments.add(commentItem);
+        List<Integer>followList= userService.getAllFollows();
+        followList.add(userComponent.getUser().getId());
+
+        List<Map<String,Object>> posts=new ArrayList<>();
+        for(int uid:followList){
+            for(Post post:postDao.selectPostsByUid(uid)){
+                Map<String,Object>postItem=new HashMap<>();
+                postItem.put("user",userDao.selectById(post.getUid()));
+                List<Map<String,Object>> comments=new ArrayList<>() ;
+                for(Comment comment:commentDao.selectCommentsByPostId(post.getId())){
+                    Map<String ,Object> commentItem=new HashMap<>();
+                    commentItem.put("user",userDao.selectById(comment.getUid()));
+                    commentItem.put("comment",comment);
+                    comments.add(commentItem);
+                }
+                postItem.put("comments",comments);
+                postItem.put("post",post);
+                postItem.put("user",userDao.selectById(uid));
+                if(likeService.isLike(post.getId(),userComponent.getUser().getId())){
+                    postItem.put("star",true);
+                }else{
+                    postItem.put("star",false);
+                }
+                posts.add(postItem);
             }
-            postItem.put("comments",comments);
-            postItem.put("post",post);
-            postItem.put("user",userComponent.getUser());
-            if(starService.isStar(post.getId(),userComponent.getUser().getId())){
-                postItem.put("star",true);
-            }else{
-                postItem.put("star",false);
-            }
-            posts.add(postItem);
         }
+
 
         Map<String,List<Map<String ,Object>>> result=new HashMap<>();
         result.put("posts",posts);

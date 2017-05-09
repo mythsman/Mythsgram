@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * Created by myths on 5/8/17.
  */
@@ -82,5 +85,19 @@ public class JedisAdapter implements InitializingBean {
             if(jedis!=null)
                 jedis.close();
         }
+    }
+
+    public Set<String> smembers(String key){
+        Jedis jedis=null;
+        try{
+            jedis=pool.getResource();
+            return jedis.smembers(key);
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(jedis!=null)
+                jedis.close();
+        }
+        return null;
     }
 }

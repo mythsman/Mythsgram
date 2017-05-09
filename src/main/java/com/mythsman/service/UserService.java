@@ -4,16 +4,15 @@ import com.mythsman.dao.LoginTicketDao;
 import com.mythsman.dao.UserDao;
 import com.mythsman.model.LoginTicket;
 import com.mythsman.model.User;
+import com.mythsman.util.JedisAdapter;
+import com.mythsman.util.JedisKeys;
 import com.mythsman.util.Md5;
 import com.mythsman.util.WordFilterService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by myths on 17-5-4.
@@ -29,6 +28,9 @@ public class UserService {
 
     @Autowired
     UserComponent userComponent;
+
+    @Autowired
+    JedisAdapter jedisAdapter;
 
     @Autowired
     WordFilterService wordFilterService;
@@ -139,7 +141,6 @@ public class UserService {
         return map;
     }
 
-
     private String addLoginTicket(int uid, String rememberMe) {
         LoginTicket loginTicket = new LoginTicket();
         loginTicket.setUid(uid);
@@ -155,5 +156,15 @@ public class UserService {
         loginTicketDao.addTicket(loginTicket);
 
         return loginTicket.getTicket();
+    }
+
+    public List<Integer> getAllFollows(){
+        String key= JedisKeys.getFollowKey(userComponent.getUser().getId());
+        Set<String>set=jedisAdapter.smembers(key);
+        List<Integer> list=new ArrayList<>();
+        for(String uid:set){
+            list.add(Integer.parseInt(uid));
+        }
+        return list;
     }
 }
