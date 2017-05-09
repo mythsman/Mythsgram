@@ -6,6 +6,7 @@ import com.mythsman.dao.UserDao;
 import com.mythsman.model.Comment;
 import com.mythsman.model.Post;
 import com.mythsman.model.User;
+import com.mythsman.util.JedisAdapter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,9 @@ public class PostService implements InitializingBean{
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    StarService starService;
+
 
 
     public Map<String,List<Map<String ,Object>>> getPostsAndComments(){
@@ -58,6 +62,11 @@ public class PostService implements InitializingBean{
             postItem.put("comments",comments);
             postItem.put("post",post);
             postItem.put("user",userComponent.getUser());
+            if(starService.getStar(post.getId(),userComponent.getUser().getId())){
+                postItem.put("star",true);
+            }else{
+                postItem.put("star",false);
+            }
             posts.add(postItem);
         }
 

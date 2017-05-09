@@ -10,5 +10,3 @@ CREATE TABLE `post` (
   PRIMARY KEY (`id`),
   KEY `uid_index` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `post` (uid,src,title) VALUES ('1','/img/1.jpg','this is the title');

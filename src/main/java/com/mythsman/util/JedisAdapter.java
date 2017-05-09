@@ -43,7 +43,7 @@ public class JedisAdapter implements InitializingBean {
         }
     }
 
-    public boolean isMember(String key,String value){
+    public boolean sisMember(String key, String value){
         Jedis jedis=null;
         try{
             jedis=pool.getResource();
@@ -69,5 +69,18 @@ public class JedisAdapter implements InitializingBean {
                 jedis.close();
         }
         return 0;
+    }
+
+    public void clear(){
+        Jedis jedis=null;
+        try{
+            jedis=pool.getResource();
+            jedis.flushDB();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(jedis!=null)
+                jedis.close();
+        }
     }
 }

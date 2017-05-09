@@ -2,10 +2,10 @@ package com.mythsman;
 
 import com.mythsman.dao.CommentDao;
 import com.mythsman.dao.PostDao;
+import com.mythsman.model.Comment;
 import com.mythsman.model.Post;
 import org.apache.log4j.Logger;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,19 +23,15 @@ public class CommentDaoTests {
     CommentDao commentDao;
 
     @Test
-    public void addCommentTests() throws Exception {
-        commentDao.addComment(2,2,"hahaha");
-        Assert.assertEquals(commentDao.selectCommentsByPostId(2).get(0).getContent(),"hahaha");
-    }
-
-    @Test
-    public void selectCommentsByPidTests() throws Exception {
-        Assert.assertEquals(commentDao.selectCommentsByPostId(1).get(0).getContent(),"hahahaha");
-    }
-
-    @Test
-    public void updateValidTests() throws Exception {
-        commentDao.updateValid(1,0);
+    public void tests(){
+        commentDao.addComment(1,1,"233");
+        Comment comment=commentDao.selectCommentsByPostId(1).get(0);
+        Assert.assertEquals(comment.getContent(),"233");
+        commentDao.updateValid(comment.getId(),0);
         Assert.assertEquals(commentDao.selectCommentsByPostId(1).get(0).getValid(),0);
+        commentDao.deleteById(comment.getId());
+        Assert.assertEquals(commentDao.selectCommentsByPostId(1).size(),0);
+
     }
+
 }

@@ -38,7 +38,7 @@
                 <input name="post_id" type="hidden" th:value="${postItem.post.id}"/>
                 <div class="form-group">
                     <div class="col-md-2 col-xs-2 star">
-                        <input name="starBtn" class="form-control starBtn" type="submit" value="Star"/>
+                        <input name="starBtn" class="form-control starBtn" type="submit" th:value="${postItem.star}?'UnStar':'Star'"/>
                     </div>
                     <div class="col-md-8 col-xs-8">
                         <input name="comment" class="form-control input-text" type="text"

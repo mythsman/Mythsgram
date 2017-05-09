@@ -25,26 +25,16 @@ public class LoginTicketDaoTests {
     @Test
     public void addTicketTests(){
         LoginTicket loginTicket=new LoginTicket();
+        String ticket="ticket";
         loginTicket.setUid(1);
-        loginTicket.setTicket("ddd");
+        loginTicket.setTicket(ticket);
         loginTicket.setValid(1);
         loginTicket.setExpire(new Date());
         loginTicketDao.addTicket(loginTicket);
-        Assert.assertNotNull(loginTicketDao.selectByTicket("ddd"));
-    }
-
-    @Test
-    public void selectByTicketTests(){
-        String ticket="aaa";
-        LoginTicket loginTicket=loginTicketDao.selectByTicket(ticket);
-        Assert.assertNotNull(loginTicket);
-    }
-
-    @Test
-    public void updateValidTests(){
-        String ticket="ccc";
+        Assert.assertNotNull(loginTicketDao.selectByTicket(ticket));
         loginTicketDao.updateValid(ticket,0);
-        LoginTicket loginTicket=loginTicketDao.selectByTicket(ticket);
+        loginTicket=loginTicketDao.selectByTicket(ticket);
         Assert.assertEquals(loginTicket.getValid(),0);
     }
+
 }

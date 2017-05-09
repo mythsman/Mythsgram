@@ -5,7 +5,7 @@ CREATE TABLE `user` (
   `name` varchar(20) NOT NULL,
   `salt` varchar(20) NOT NULL,
   `password` varchar(40) NOT NULL,
-  `avatar` varchar(40) DEFAULT '/img/1.jpg',
+  `avatar` varchar(100) DEFAULT '/img/1.jpg',
   `website` varchar(40) DEFAULT NULL,
   `biography` varchar(150) DEFAULT 'I am lazy.',
   `email` varchar(40) DEFAULT NULL,
@@ -18,7 +18,3 @@ CREATE TABLE `user` (
   UNIQUE KEY `id` (`id`),
   UNIQUE INDEX `name_index` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT  INTO `user`(name, salt, password)VALUES("123","53ccf","f87eb59fc2286d4a991328dac8bd9727");
-INSERT  INTO `user`(name, salt, password)VALUES("myths2","aaaaa","123456");
-INSERT  INTO `user`(name, salt, password)VALUES("myths3","aaaaa","123456");
