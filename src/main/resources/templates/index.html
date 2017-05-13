@@ -36,7 +36,7 @@
             <hr/>
             <form th:id="${postItem.post.id}" class="form-horizontal form" method="post" action="/index">
                 <input name="post_id" type="hidden" th:value="${postItem.post.id}"/>
-                <div class="form-group">
+                <div class="form-group row">
                     <div class="col-md-2 col-xs-2 star">
                         <input name="starBtn" class="form-control starBtn" type="submit" th:value="${postItem.star}?'UnStar':'Star'"/>
                     </div>
